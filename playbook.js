@@ -6,9 +6,10 @@ const chalk = require('chalk');
 
 const baseURL = 'https://your-jira-instance.com/rest/api/2/';
 
-const fetchIssues = async (projectKey) => {
+const fetchIssues = async (projectKey, labels) => {
   try {
-    const response = await axios.get(`${baseURL}search?jql=project=${projectKey}`);
+    console.log(chalk.green(`Calling ... ${baseURL}search?jql=project=${projectKey}&labels=${labels}`));
+    const response = await axios.get(`${baseURL}search?jql=project=${projectKey}&labels=${labels}`);
     console.log(chalk.green('Success: '), response.data.issues.length, 'issues fetched');
     return response.data.issues;
   } catch (error) {
@@ -24,9 +25,14 @@ const main = async () => {
       name: 'projectKey',
       message: 'Enter the JIRA project key:',
     },
+   {
+     type: 'input',
+     name: 'labels',
+     message: 'Enter the JIRA labels (comma-separated):'
+   }
   ]);
 
-  const issues = await fetchIssues(answers.projectKey);
+  const issues = await fetchIssues(answers.projectKey, answers.labels);
   console.table(issues.map(issue => ({
     key: issue.key,
     summary: issue.fields.summary,
