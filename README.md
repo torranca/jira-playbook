@@ -19,7 +19,7 @@ This is a command line interface (CLI) that allows you to fetch JIRA issues usin
 1. Open the terminal and navigate to the directory where you saved the code
 2. Run the following command:
 
-	./playbook.js
+	node playbook.js
 
 3. You will be prompted to enter the JIRA project key. Once you enter the key, the script will call the JIRA REST API to fetch the issues for the given project and display the results in a table.
 
